@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" class="h-100">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+  <title>Auth0 and Firebase Chat App</title>
+</head>
+<body class="h-100">
+
+<div class="container-fluid d-flex flex-column h-100">
+  <div class="row bg-primary p-2 text-white" style="z-index: 10000; min-height: 60px;">
+    <div class="col-12 p-2">
+      <div id="profile" class="font-weight-bold"></div>
+      <button id="sign-in" type="button" class="btn">Sign In</button>
+    </div>
+  </div>
+  <div class="row flex-fill">
+    <div id="chat-area" class="col-12 d-flex flex-column-reverse" style="overflow-y: auto;">
+    </div>
+  </div>
+  <div class="row bg-dark p-2" style="min-height: 55px;">
+    <div class="col-12">
+      <input type="text" class="form-control" id="message" aria-describedby="message-help"
+             placeholder="Enter your message" disabled>
+    </div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-firestore.js"></script>
+<script src="https://cdn.auth0.com/js/auth0/9.7.3/auth0.min.js"></script>
+<script src="/app/auth0.js"></script>
+<script src="/app/firebase.js"></script>
+<script src="/app/index.js"></script>
+</body>
+</html>
