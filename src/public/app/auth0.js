@@ -43,6 +43,11 @@ class Auth0Client {
   signIn() {
     _auth0Client.authorize();
   }
+
+  signOut() {
+    _idToken = null;
+    _profile = null;
+  }
 }
 
 const auth0Client = new Auth0Client();

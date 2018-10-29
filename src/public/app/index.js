@@ -2,6 +2,7 @@ const chatArea = document.getElementById('chat-area');
 const messageInput = document.getElementById('message');
 const profileElement = document.getElementById('profile');
 const signInButton = document.getElementById('sign-in');
+const signOutButton = document.getElementById('sign-out');
 
 messageInput.addEventListener('keyup', async (event) => {
   if (event.code !== 'Enter') return;
@@ -11,6 +12,11 @@ messageInput.addEventListener('keyup', async (event) => {
 
 signInButton.addEventListener('click', async () => {
   auth0Client.signIn();
+});
+
+signOutButton.addEventListener('click', async () => {
+  auth0Client.signOut();
+  firebaseClient.signOut();
 });
 
 async function setFirebaseCustomToken() {
@@ -29,12 +35,14 @@ firebaseClient.setAuthStateListener((user) => {
   if (!user) {
     profileElement.innerText = '';
     signInButton.style.display = 'inline-block';
+    signOutButton.style.display = 'none';
     messageInput.disabled = true;
     return;
   }
 
   profileElement.innerText = `Hello, ${user.displayName}.`;
   signInButton.style.display = 'none';
+  signOutButton.style.display = 'inline-block';
   messageInput.disabled = false;
   firebaseClient.setMessagesListener((querySnapshot) => {
     chatArea.innerHTML = '';
