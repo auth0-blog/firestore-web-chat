@@ -17,6 +17,7 @@ signInButton.addEventListener('click', async () => {
 signOutButton.addEventListener('click', async () => {
   auth0Client.signOut();
   firebaseClient.signOut();
+  deactivateChat();
 });
 
 async function setFirebaseCustomToken() {
@@ -29,18 +30,12 @@ async function setFirebaseCustomToken() {
   const data = await response.json();
   await firebaseClient.setToken(data.firebaseToken);
   await firebaseClient.updateProfile(auth0Client.getProfile());
+  activateChat();
 }
 
-firebaseClient.setAuthStateListener((user) => {
-  if (!user) {
-    profileElement.innerText = '';
-    signInButton.style.display = 'inline-block';
-    signOutButton.style.display = 'none';
-    messageInput.disabled = true;
-    return;
-  }
-
-  profileElement.innerText = `Hello, ${user.displayName}.`;
+function activateChat() {
+  const {displayName} = firebase.auth().currentUser;
+  profileElement.innerText = `Hello, ${displayName}.`;
   signInButton.style.display = 'none';
   signOutButton.style.display = 'inline-block';
   messageInput.disabled = false;
@@ -60,10 +55,18 @@ firebaseClient.setAuthStateListener((user) => {
       chatArea.appendChild(messageContainer);
     });
   });
-});
+}
+
+function deactivateChat() {
+  profileElement.innerText = '';
+  signInButton.style.display = 'inline-block';
+  signOutButton.style.display = 'none';
+  messageInput.disabled = true;
+}
 
 (async () => {
-  const loggedInThroughCallback = await auth0Client.handleCallback();
+  deactivateChat();
 
+  const loggedInThroughCallback = await auth0Client.handleCallback();
   if (loggedInThroughCallback) await setFirebaseCustomToken();
 })();
